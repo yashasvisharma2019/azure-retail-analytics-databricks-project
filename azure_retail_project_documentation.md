@@ -1,34 +1,34 @@
 # Azure Retail Data Engineering Project Documentation
 
 ## Project Overview
-This project demonstrates an end-to-end Azure retail analytics pipeline built using a public retail dataset sourced from the GitHub repository [AZURE-DATA-ENGINEER---DATABRICKS-PROJECTS](https://github.com/manish040596/AZURE-DATA-ENGINEER---DATABRICKS-PROJECTS). The dataset was ingested through Azure Data Factory into Azure Data Lake Storage Gen2 under the storage account `pocretailproject00`, then processed in Databricks using a medallion-style structure with bronze and silver layers.[file:1][file:3]
+This project demonstrates an end-to-end Azure retail analytics pipeline built using a public retail dataset sourced from the GitHub repository [AZURE-DATA-ENGINEER---DATABRICKS-PROJECTS](https://github.com/manish040596/AZURE-DATA-ENGINEER---DATABRICKS-PROJECTS). The dataset was ingested through Azure Data Factory into Azure Data Lake Storage Gen2 under the storage account `pocretailproject00`, then processed in Databricks using a medallion-style structure with bronze and silver layers.
 
-The objective was to clean the retail transaction data and build analytical outputs for daily revenue and purchases, revenue by payment method, store performance, loyalty-level revenue contribution, and product-category revenue distribution.[file:2]
+The objective was to clean the retail transaction data and build analytical outputs for daily revenue and purchases, revenue by payment method, store performance, loyalty-level revenue contribution, and product-category revenue distribution.
 
 ## Architecture
 The implementation followed a simple cloud data engineering workflow:
 
-1. **Source dataset**: Retail transaction dataset from the GitHub repository.[file:1]
-2. **Ingestion**: Azure Data Factory pipeline copied raw files into ADLS Gen2 `pocretailproject00`.[file:1][image:1]
-3. **Storage layers**: Databricks volumes were created for bronze, silver, and gold under the `retailproject.retail` schema.[file:3]
-4. **Processing**: Raw parquet data was read from the bronze layer, cleaned with PySpark, standardized, and written into the silver layer.[file:1]
-5. **Analysis and visualization**: SQL queries and Databricks visualizations were used on the cleaned silver dataset to produce business insights.[file:2]
+1. **Source dataset**: Retail transaction dataset from the GitHub repository.
+2. **Ingestion**: Azure Data Factory pipeline copied raw files into ADLS Gen2 `pocretailproject00`.
+3. **Storage layers**: Databricks volumes were created for bronze, silver, and gold under the `retailproject.retail` schema.
+4. **Processing**: Raw parquet data was read from the bronze layer, cleaned with PySpark, standardized, and written into the silver layer.
+5. **Analysis and visualization**: SQL queries and Databricks visualizations were used on the cleaned silver dataset to produce business insights.
 
 ## Services Used
-- **Azure Data Factory** for orchestration and raw data movement into the lake.[image:1]
-- **Azure Data Lake Storage Gen2** for centralized cloud storage using the storage account `pocretailproject00`.[file:1]
-- **Azure Databricks** for data cleaning, transformation, SQL analysis, and dashboards.[file:1][file:2]
-- **PySpark** for schema handling and transformation logic.[file:1]
+- **Azure Data Factory** for orchestration and raw data movement into the lake.
+- **Azure Data Lake Storage Gen2** for centralized cloud storage using the storage account `pocretailproject00`.
+- **Azure Databricks** for data cleaning, transformation, SQL analysis, and dashboards.
+- **PySpark** for schema handling and transformation logic.
 
 ## Dataset and Schema
-The dataset contains retail transaction fields such as `TransactionID`, `CustomerID`, `CustomerAge`, `Gender`, `ProductID`, `ProductName`, `ProductCategory`, `SubCategory`, `Brand`, `Quantity`, `Amount`, `Discount`, `PaymentType`, `StoreID`, `StoreLocation`, `StoreRegion`, `TransactionDate`, `ReturnStatus`, `DeviceUsed`, and `CustomerLoyaltyLevel`.[file:1]
+The dataset contains retail transaction fields such as `TransactionID`, `CustomerID`, `CustomerAge`, `Gender`, `ProductID`, `ProductName`, `ProductCategory`, `SubCategory`, `Brand`, `Quantity`, `Amount`, `Discount`, `PaymentType`, `StoreID`, `StoreLocation`, `StoreRegion`, `TransactionDate`, `ReturnStatus`, `DeviceUsed`, and `CustomerLoyaltyLevel`.
 
-The raw records showed common quality issues such as inconsistent casing, extra spaces, null values in customer fields, and transaction timestamps stored as strings before cleaning.[file:1]
+The raw records showed common quality issues such as inconsistent casing, extra spaces, null values in customer fields, and transaction timestamps stored as strings before cleaning.
 
 ## Step-by-Step Implementation
 
 ### 1. Databricks setup
-A Databricks setup notebook was used to select the `retailproject` catalog, create the `retail` schema, and create three storage volumes named bronze, silver, and gold.[file:3]
+A Databricks setup notebook was used to select the `retailproject` catalog, create the `retail` schema, and create three storage volumes named bronze, silver, and gold.
 
 ```sql
 USE CATALOG retailproject;
@@ -39,14 +39,14 @@ CREATE VOLUME IF NOT EXISTS retailproject.retail.gold;
 ```
 
 ### 2. Data ingestion with Azure Data Factory
-The raw dataset was first gathered from the GitHub repository and then moved into ADLS using an Azure Data Factory copy pipeline. The ADF pipeline copied data from the source location into the bronze zone so that Databricks could consume it from cloud storage.[file:1][image:1]
+The raw dataset was first gathered from the GitHub repository and then moved into ADLS using an Azure Data Factory copy pipeline. The ADF pipeline copied data from the source location into the bronze zone so that Databricks could consume it from cloud storage.
 
 A screenshot of the Data Factory pipeline is shown below.
 
 [image:1]
 
 ### 3. Bronze layer processing
-The bronze notebook copied data from the ADLS path `abfss://retail@pocretailproject00.dfs.core.windows.net/bronze` into the Databricks bronze volume and then loaded the parquet file into a Spark DataFrame.[file:1]
+The bronze notebook copied data from the ADLS path `abfss://retail@pocretailproject00.dfs.core.windows.net/bronze` into the Databricks bronze volume and then loaded the parquet file into a Spark DataFrame.
 
 The notebook confirms a bronze read path similar to:
 
@@ -56,14 +56,14 @@ bronzedf = spark.read.parquet("/Volumes/retailproject/retail/bronze/.../retailda
 ```
 
 ### 4. Data cleaning in Databricks
-The raw data was cleaned in PySpark before writing it into the silver layer. The cleaning work included removing invalid records, normalizing text values, standardizing fields like payment type, store region, and device used, and converting transaction dates from strings into timestamps.[file:1]
+The raw data was cleaned in PySpark before writing it into the silver layer. The cleaning work included removing invalid records, normalizing text values, standardizing fields like payment type, store region, and device used, and converting transaction dates from strings into timestamps.
 
-Observed examples in the raw data included values such as ` cash `, `UPI `, ` web `, `South `, and mixed-case variants like `WEB` and `web`, which were standardized during transformation.[file:1]
+Observed examples in the raw data included values such as ` cash `, `UPI `, ` web `, `South `, and mixed-case variants like `WEB` and `web`, which were standardized during transformation.
 
-The cleaning logic also filtered rows using non-null checks on critical fields such as `TransactionID`, `CustomerID`, and `TransactionDate`, then wrote the cleaned output into the silver volume in parquet format.[file:1]
+The cleaning logic also filtered rows using non-null checks on critical fields such as `TransactionID`, `CustomerID`, and `TransactionDate`, then wrote the cleaned output into the silver volume in parquet format.
 
 ### 5. Silver layer analysis
-The cleaned silver dataset was read in a second notebook and registered as a temporary view named `Retaildata` for SQL-based analysis.[file:2]
+The cleaned silver dataset was read in a second notebook and registered as a temporary view named `Retaildata` for SQL-based analysis.
 
 ```python
 silverdf = spark.read.parquet("/Volumes/retailproject/retail/silver")
@@ -137,7 +137,7 @@ Each issue was handled through a structured transformation approach:[file:1][fil
 ## Project Learnings
 This project strengthened practical understanding of Azure-based data engineering patterns by connecting ingestion, storage, transformation, and analytics in one workflow.[file:1][file:2][file:3]
 
-It also highlighted why data cleaning is essential before dashboarding, especially when business metrics depend on consistent dimensions such as payment method, loyalty segment, and store location.[file:1][file:2]
+It also highlighted why data cleaning is essential before dashboarding, especially when business metrics depend on consistent dimensions such as payment method, loyalty segment, and store location.
 
 ## Repository Structure Suggestion
 A clean GitHub structure for this project can be:
@@ -157,9 +157,5 @@ AZURE-RETAIL-DATA-ENGINEERING-PROJECT/
 ```
 
 ## README Summary
-This repository contains an end-to-end Azure retail analytics project using Azure Data Factory, ADLS Gen2, and Databricks. The pipeline ingests raw retail data from GitHub into the lake, transforms it from bronze to silver, and generates analytical visualizations for daily sales trends, payment behavior, store performance, loyalty contribution, and product-category revenue.[file:1][file:2][file:3]
+This repository contains an end-to-end Azure retail analytics project using Azure Data Factory, ADLS Gen2, and Databricks. The pipeline ingests raw retail data from GitHub into the lake, transforms it from bronze to silver, and generates analytical visualizations for daily sales trends, payment behavior, store performance, loyalty contribution, and product-category revenue.
 
-## Suggested GitHub Intro
-```markdown
-This project showcases an end-to-end Azure Data Engineering workflow using Azure Data Factory, ADLS Gen2, and Databricks. The retail dataset was ingested from a GitHub source into cloud storage, cleaned in Databricks using PySpark, and analyzed through SQL-based visualizations to answer key business questions around revenue, purchases, store performance, loyalty segmentation, and product categories.
-```
