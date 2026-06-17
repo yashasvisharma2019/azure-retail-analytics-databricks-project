@@ -1,0 +1,15 @@
+{
+	"name": "pocdatafactory007",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3ec7ba2a-3e93-4ee9-80fb-a671c83e75d3",
+		"tenantId": "ac764720-18e5-4f9a-b021-2d3ce4532680"
+	}
+}
