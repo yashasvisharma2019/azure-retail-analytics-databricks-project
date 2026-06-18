@@ -73,17 +73,17 @@ silverdf.createOrReplaceTempView("Retaildata")
 ### 6. Business questions answered
 The final analysis focused on the following visual outputs:[file:2]
 
-- Daily revenues and purchases.[file:2]
-- Revenue by payment method.[file:2]
+- Daily revenues and purchases.
+- Revenue by payment method.
 - Store performance.[file:2]
-- Loyalty-level revenue contribution.[file:2]
-- Product-category revenue contribution.[file:2]
+- Loyalty-level revenue contribution.
+- Product-category revenue contribution.
 
 ## SQL and Visual Analysis
-The silver notebook contains aggregation queries and Databricks visualizations built on the cleaned retail view.[file:2]
+The silver notebook contains aggregation queries and Databricks visualizations built on the cleaned retail view.
 
 ### Daily revenue and purchases
-A SQL query grouped data by transaction date and calculated total revenue and total purchases per day using `sum(Amount)` and `count(distinct TransactionID)`.[file:2]
+A SQL query grouped data by transaction date and calculated total revenue and total purchases per day using `sum(Amount)` and `count(distinct TransactionID)`.
 
 Example logic:
 
@@ -96,46 +96,46 @@ GROUP BY 1;
 ```
 
 ### Revenue by payment method
-The notebook aggregated revenue by `PaymentType` and showed that the cleaned data supports categories such as `UPI`, `NETBANKING`, `CASH`, and `CARD`.[file:2]
+The notebook aggregated revenue by `PaymentType` and showed that the cleaned data supports categories such as `UPI`, `NETBANKING`, `CASH`, and `CARD`.
 
 ### Store performance
-Store-level revenue analysis was created using `StoreLocation`, allowing comparison across cities such as Delhi, Jaipur, Chennai, Kolkata, Hyderabad, Bangalore, Pune, and Mumbai.[file:2]
+Store-level revenue analysis was created using `StoreLocation`, allowing comparison across cities such as Delhi, Jaipur, Chennai, Kolkata, Hyderabad, Bangalore, Pune, and Mumbai.
 
 ### Loyalty-level revenue contribution
-Revenue contribution by customer loyalty level was analyzed using the `CustomerLoyaltyLevel` field, which includes levels such as BRONZE, SILVER, GOLD, and PLATINUM.[file:1][file:2]
+Revenue contribution by customer loyalty level was analyzed using the `CustomerLoyaltyLevel` field, which includes levels such as BRONZE, SILVER, GOLD, and PLATINUM.
 
 ### Product-category analysis
-Revenue was also grouped by `ProductCategory`, with categories including Home, Apparel, Grocery, and Electronics.[file:2]
+Revenue was also grouped by `ProductCategory`, with categories including Home, Apparel, Grocery, and Electronics.
 
 ## Key Results
-The silver notebook output shows product-category revenue totals of 168236.96 for Home, 142906.41 for Apparel, 197978.54 for Grocery, and 184341.95 for Electronics.[file:2]
+The silver notebook output shows product-category revenue totals of 168236.96 for Home, 142906.41 for Apparel, 197978.54 for Grocery, and 184341.95 for Electronics.
 
-Revenue by payment method in the visualization output was 187472.64 for UPI, 169487.94 for NETBANKING, 235006.96 for CASH, and 101496.32 for CARD.[file:2]
+Revenue by payment method in the visualization output was 187472.64 for UPI, 169487.94 for NETBANKING, 235006.96 for CASH, and 101496.32 for CARD.
 
-Store-location revenue output in the notebook showed 116746.30 for Delhi, 62147.62 for Jaipur, 92493.36 for Chennai, 120687.29 for Kolkata, 30630.84 for Hyderabad, 100496.96 for Bangalore, 113135.06 for Pune, and 57126.43 for Mumbai.[file:2]
+Store-location revenue output in the notebook showed 116746.30 for Delhi, 62147.62 for Jaipur, 92493.36 for Chennai, 120687.29 for Kolkata, 30630.84 for Hyderabad, 100496.96 for Bangalore, 113135.06 for Pune, and 57126.43 for Mumbai.
 
-The daily revenue table in the notebook also confirmed that the analysis was created at date level with both revenue and purchase counts, for example 69047.60 revenue and 6 purchases on 2024-05-05, and 49759.00 revenue and 8 purchases on 2024-05-26.[file:2]
+The daily revenue table in the notebook also confirmed that the analysis was created at date level with both revenue and purchase counts, for example 69047.60 revenue and 6 purchases on 2024-05-05, and 49759.00 revenue and 8 purchases on 2024-05-26.
 
 ## Difficulties Faced
-Several practical issues were encountered during the project:[file:1][file:2]
+Several practical issues were encountered during the project:
 
-- **Inconsistent categorical values**: Fields such as payment type, device used, and store region had inconsistent spaces and capitalization in the raw layer.[file:1]
-- **Null values**: Some records had missing values in customer-related columns like age.[file:1]
-- **Timestamp conversion**: `TransactionDate` initially appeared as a string and needed conversion into a proper timestamp/date format for time-based analysis.[file:1]
-- **Layer organization**: A clear bronze-to-silver structure had to be maintained so raw data and cleaned data stayed separate.[file:1][file:3]
-- **Visualization readiness**: Raw data was not directly suitable for dashboards until categorical cleanup and schema normalization were complete.[file:1][file:2]
+- **Inconsistent categorical values**: Fields such as payment type, device used, and store region had inconsistent spaces and capitalization in the raw layer.
+- **Null values**: Some records had missing values in customer-related columns like age.
+- **Timestamp conversion**: `TransactionDate` initially appeared as a string and needed conversion into a proper timestamp/date format for time-based analysis.
+- **Layer organization**: A clear bronze-to-silver structure had to be maintained so raw data and cleaned data stayed separate.
+- **Visualization readiness**: Raw data was not directly suitable for dashboards until categorical cleanup and schema normalization were complete.
 
 ## How the Problems Were Solved
-Each issue was handled through a structured transformation approach:[file:1][file:2]
+Each issue was handled through a structured transformation approach:
 
-- Text columns were trimmed and standardized to remove leading or trailing spaces and enforce consistent casing.[file:1]
-- Important business columns were validated before analysis, and invalid rows were filtered where required.[file:1]
-- Transaction dates were converted into timestamp/date format so daily aggregations could be computed correctly.[file:1][file:2]
-- Cleaned data was written into the silver layer as parquet for efficient downstream SQL queries.[file:1]
-- Temporary SQL views in Databricks simplified visual creation and made business metrics easier to query repeatedly.[file:2]
+- Text columns were trimmed and standardized to remove leading or trailing spaces and enforce consistent casing.
+- Important business columns were validated before analysis, and invalid rows were filtered where required.
+- Transaction dates were converted into timestamp/date format so daily aggregations could be computed correctly.
+- Cleaned data was written into the silver layer as parquet for efficient downstream SQL queries.
+- Temporary SQL views in Databricks simplified visual creation and made business metrics easier to query repeatedly.
 
 ## Project Learnings
-This project strengthened practical understanding of Azure-based data engineering patterns by connecting ingestion, storage, transformation, and analytics in one workflow.[file:1][file:2][file:3]
+This project strengthened practical understanding of Azure-based data engineering patterns by connecting ingestion, storage, transformation, and analytics in one workflow.
 
 It also highlighted why data cleaning is essential before dashboarding, especially when business metrics depend on consistent dimensions such as payment method, loyalty segment, and store location.
 
@@ -150,10 +150,9 @@ AZURE-RETAIL-DATA-ENGINEERING-PROJECT/
 │   ├── Setup.ipynb
 │   ├── Bronze.ipynb
 │   └── silver.ipynb
-├── images/
-│   └── adf-pipeline.png
-└── docs/
-    └── project-documentation.md
+├── 
+│   └── 
+└── 
 ```
 
 ## README Summary
