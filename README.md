@@ -94,6 +94,7 @@ SELECT date(TransactionDate) AS TransactionDate,
 FROM Retaildata
 GROUP BY 1;
 ```
+<img width="1342" height="500" alt="visualization" src="https://github.com/user-attachments/assets/3b00e120-e3e0-488b-b7db-07a9c1244bb1" />
 
 ### Revenue by payment method
 The notebook aggregated revenue by `PaymentType` and showed that the cleaned data supports categories such as `UPI`, `NETBANKING`, `CASH`, and `CARD`.
