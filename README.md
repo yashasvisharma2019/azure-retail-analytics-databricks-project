@@ -99,14 +99,22 @@ GROUP BY 1;
 ### Revenue by payment method
 The notebook aggregated revenue by `PaymentType` and showed that the cleaned data supports categories such as `UPI`, `NETBANKING`, `CASH`, and `CARD`.
 
+<img width="1342" height="500" alt="visualization (1)" src="https://github.com/user-attachments/assets/39051d1d-7d0f-4c2b-8f05-682f73f360af" />
+
+
 ### Store performance
 Store-level revenue analysis was created using `StoreLocation`, allowing comparison across cities such as Delhi, Jaipur, Chennai, Kolkata, Hyderabad, Bangalore, Pune, and Mumbai.
+<img width="1342" height="500" alt="visualization (2)" src="https://github.com/user-attachments/assets/2970a722-6796-46d8-b587-d60ec6371178" />
+
 
 ### Loyalty-level revenue contribution
 Revenue contribution by customer loyalty level was analyzed using the `CustomerLoyaltyLevel` field, which includes levels such as BRONZE, SILVER, GOLD, and PLATINUM.
+<img width="1342" height="500" alt="visualization (4)" src="https://github.com/user-attachments/assets/3d86eb4d-484e-4ed8-a2e7-2855f91aff3a" />
 
 ### Product-category analysis
 Revenue was also grouped by `ProductCategory`, with categories including Home, Apparel, Grocery, and Electronics.
+<img width="1342" height="500" alt="visualization (3)" src="https://github.com/user-attachments/assets/adea1a09-1776-42ac-8370-a9bcaa10bd41" />
+
 
 ## Key Results
 The silver notebook output shows product-category revenue totals of 168236.96 for Home, 142906.41 for Apparel, 197978.54 for Grocery, and 184341.95 for Electronics.
